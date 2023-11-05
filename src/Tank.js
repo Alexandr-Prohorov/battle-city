@@ -5,6 +5,8 @@ export default class Tank {
         x: 170,
         y: 170
     }
+    sh = 26
+    sw = 26
     animationFrame = 0
     isFire = false
     bullet = new Bullet(this.axis.x, this.axis.y)

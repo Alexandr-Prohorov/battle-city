@@ -23,21 +23,25 @@ export default class World {
                     }
                     break
                 case 'ArrowRight':
-                    this.player1Tank.direction = 6
-                    this.player1Tank.animationFrame ^=1
-                    this.player1Tank.axis.x += 1
+                    if (collision !== 'ArrowRight') {
+                        this.player1Tank.direction = 6
+                        this.player1Tank.animationFrame ^= 1
+                        this.player1Tank.axis.x += 1
+                    }
                     break
                 case 'ArrowDown':
-                    this.player1Tank.direction = 4
-                    this.player1Tank.animationFrame ^=1
-                    this.player1Tank.axis.y += 1
+                    if (collision !== 'ArrowDown') {
+                        this.player1Tank.direction = 4
+                        this.player1Tank.animationFrame ^=1
+                        this.player1Tank.axis.y += 1
+                    }
                     break
                 case 'ArrowLeft':
-                    // if (collision !== 'ArrowLeft') {
+                    if (collision !== 'ArrowLeft') {
                         this.player1Tank.direction = 2
                         this.player1Tank.animationFrame ^=1
                         this.player1Tank.axis.x -= 1
-                    // }
+                    }
                     break
                 case 'Space':
                     console.log('space', this.player1Tank)
