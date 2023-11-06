@@ -22,11 +22,7 @@ export default class Collision {
         })
     }
 
-    update() {
-        this.hasCollision();
-    }
-
-    hasCollision() {
+    get hasCollision() {
         console.log('player1Tank', this.player1Tank.axis.y)
         const keys = []
         this.bricksWalls.forEach(wall => {
