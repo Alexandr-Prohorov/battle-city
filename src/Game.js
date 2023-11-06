@@ -36,7 +36,7 @@ export default class Game {
 
     loop() {
         this.updateCounter()
-        this.world.update(this.key, this.isMoving, this.collision.hasCollision())
+        this.world.update(this.key, this.isMoving, this.collision.hasCollision)
         this.view.update(this.world)
         requestAnimationFrame(this.loop)
     }

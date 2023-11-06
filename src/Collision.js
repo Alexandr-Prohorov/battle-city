@@ -28,31 +28,46 @@ export default class Collision {
 
     hasCollision() {
         console.log('player1Tank', this.player1Tank.axis.y)
-        let key = ''
+        const keys = []
         this.bricksWalls.forEach(wall => {
             if (
                 this.player1Tank.axis.y <= wall.y + wall.sh &&
+                this.player1Tank.axis.y > wall.y - this.player1Tank.sh &&
+                this.player1Tank.axis.x < wall.x + wall.sw &&
+                this.player1Tank.axis.x > wall.x - this.player1Tank.sw
+            ) keys.push('ArrowUp')
+            if (
                 this.player1Tank.axis.y >= wall.y - this.player1Tank.sh &&
+                this.player1Tank.axis.y < wall.y + wall.sh &&
+                this.player1Tank.axis.x > wall.x - this.player1Tank.sw &&
+                this.player1Tank.axis.x < wall.x + wall.sw
+            ) keys.push('ArrowDown')
+            if (
+                this.player1Tank.axis.x <= wall.x + wall.sw &&
+                this.player1Tank.axis.x > wall.x + this.player1Tank.sw &&
+                this.player1Tank.axis.y < wall.y + wall.sh &&
+                this.player1Tank.axis.y > wall.y - this.player1Tank.sh
+            ) keys.push('ArrowLeft')
+            if (
                 this.player1Tank.axis.x >= wall.x - this.player1Tank.sw &&
-                wall.x + wall.sw >= this.player1Tank.axis.x &&
-                this.player1Tank.direction === 0
-            ) key = 'ArrowUp'
-            if (
-                this.player1Tank.axis.x <= wall.x + wall.sw &&
-                this.player1Tank.axis.x >= wall.x + wall.sw &&
-                this.player1Tank.axis.y <= wall.y + wall.sh &&
-                this.player1Tank.axis.y >= wall.y - this.player1Tank.sh &&
-                this.player1Tank.direction === 2
-            ) key = 'ArrowLeft'
-            if (
-                this.player1Tank.axis.x + this.player1Tank.sw >= wall.x &&
-                this.player1Tank.axis.x <= wall.x + wall.sw &&
-                this.player1Tank.axis.y >= wall.y - this.player1Tank.sh &&
-                this.player1Tank.axis.y <= wall.y + wall.sh &&
-                this.player1Tank.direction === 6
-            ) key = 'ArrowRight'
+                this.player1Tank.axis.x < wall.x + wall.sw &&
+                this.player1Tank.axis.y > wall.y - this.player1Tank.sh &&
+                this.player1Tank.axis.y < wall.y + wall.sh
+            ) keys.push('ArrowRight')
         })
+        if (
+            this.player1Tank.axis.y <= 0
+        ) keys.push('ArrowUp')
+        if (
+            this.player1Tank.axis.y >= 512
+        ) keys.push('ArrowDown')
+        if (
+            this.player1Tank.axis.x <= 0
+        ) keys.push('ArrowLeft')
+        if (
+            this.player1Tank.axis.x >= 800
+        ) keys.push('ArrowRight')
         console.log(this.player1Tank.direction)
-        return key
+        return keys
     }
 }
