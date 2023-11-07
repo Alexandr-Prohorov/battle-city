@@ -6,6 +6,8 @@ export default class BrickWall {
             y: entity.y
         }
     }
+    sh = 32
+    sw = 32
     frame  = [512, 0, 32, 32]
 
     render(context, sprite) {
