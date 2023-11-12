@@ -16,12 +16,19 @@ export default class View {
         this.drawGrid()
         this.renderBullet(world.player1Tank)
         this.renderPlayer1Tank(world.player1Tank)
+        this.renderEnemyTanks(world.enemyTanks)
         this.renderBrickWall(world.bricksWalls)
     }
 
 
     renderPlayer1Tank(player1Tank) {
         player1Tank.render(this.context, this.sprite)
+    }
+
+    renderEnemyTanks(enemyTanks) {
+        enemyTanks.map(tank => {
+            tank.render(this.context, this.sprite)
+        })
     }
 
     renderBullet(player1Tank) {

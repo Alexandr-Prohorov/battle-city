@@ -3,19 +3,19 @@ import BrickWall from './BrickWall.js'
 import Collision from './Collision.js'
 
 export default class World {
-    player1Tank = new Tank()
+    player1Tank = null
     player2Tank = null
     bricksWalls = []
     enemyTanks = []
-    collision = new Collision(this)
+    collision = null
 
     async init(level) {
         this.generateEntities(level) // Переделать если уровней много
+        this.collision = new Collision(this)
     }
 
     update(key, isMoving) {
         let hasCollision = this.collision.hasCollision
-        console.log('UPDATE', key, isMoving, hasCollision)
         if (isMoving) {
             switch (key) {
                 case 'ArrowUp':
@@ -51,6 +51,14 @@ export default class World {
         level.map(entity => {
             entity.bricksWalls.map(elem => {
                 this.bricksWalls.push(new BrickWall(elem))
+            })
+
+            this.player1Tank = new Tank(entity.player1Tank)
+
+            console.log(this.player1Tank)
+
+            entity.enemyTanks.map(elem => {
+                this.enemyTanks.push(new Tank(elem))
             })
         })
     }

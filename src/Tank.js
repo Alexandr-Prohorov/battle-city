@@ -1,26 +1,18 @@
 import Bullet from './Bullet.js'
 export default class Tank {
-    direction = 0
-    axis = {
-        x: 170,
-        y: 170
+    constructor(entity) {
+        this.axis = {
+            x: entity.x,
+            y: entity.y
+        }
+        this.frames = entity.frames
     }
+    direction = 0
     sh = 26
     sw = 26
     animationFrame = 0
     isFire = false
-    bullet = new Bullet(this.axis.x, this.axis.y)
-
-    frames = [
-        [2, 4, 26, 26],
-        [34, 4, 26, 26],
-        [68, 2, 26, 26],
-        [100, 2, 26, 26],
-        [130, 2, 26, 26],
-        [162, 2, 26, 26],
-        [194, 2, 26, 26],
-        [226, 2, 26, 26]
-    ]
+    // bullet = new Bullet(this.axis.x, this.axis.y)
 
     get frame() {
         return this.frames[this.direction + this.animationFrame]
