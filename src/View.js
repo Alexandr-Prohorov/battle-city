@@ -27,7 +27,7 @@ export default class View {
 
     renderEnemyTanks(enemyTanks) {
         enemyTanks.map(tank => {
-            tank.render(this.context, this.sprite)
+            tank.model.render(this.context, this.sprite)
         })
     }
 
