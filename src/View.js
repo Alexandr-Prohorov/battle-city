@@ -13,11 +13,11 @@ export default class View {
 
     update(world) {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
-        this.drawGrid()
+        // this.drawGrid()
+        this.renderBrickWall(world.bricksWalls)
         this.renderBullet(world.player1Tank)
         this.renderPlayer1Tank(world.player1Tank)
         this.renderEnemyTanks(world.enemyTanks)
-        this.renderBrickWall(world.bricksWalls)
     }
 
 
