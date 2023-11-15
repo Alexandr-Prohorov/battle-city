@@ -5,8 +5,10 @@ export default class BrickWall {
             x: entity.x,
             y: entity.y
         }
+        this.frame = entity.frame
     }
-    frame  = [512, 0, 32, 32]
+    sh = 32
+    sw = 32
 
     render(context, sprite) {
         let _frame = this.frame
