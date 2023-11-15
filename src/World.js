@@ -1,8 +1,8 @@
 import Tank from './Models/Tank.js'
 import BrickWall from './Models/BrickWall.js'
-import collision from './utils/collision.js'
 import TankAI from './TankAI.js'
 
+import collision from './utils/collision.js'
 import controller from './utils/controller.js'
 
 export default class World {
@@ -16,14 +16,34 @@ export default class World {
     }
 
     update(key, isMoving) {
-        let collisionCheck = collision(this.enemyTanks.concat(this.bricksWalls), this.player1Tank)
-        controller(key, isMoving, collisionCheck, this.player1Tank)
+        this.player1TankController(key, isMoving)
+        this.enemyTanksController()
+    }
 
-        this.enemyTanks.forEach(tank => {
+    player1TankController (key, isMoving) {
+        let arrayDynamicObjects = this.enemyTanks
+        let arrayStaticObjects = this.bricksWalls
+
+        let collisionWidthDynamic = collision(arrayDynamicObjects, this.player1Tank, false)
+        let collisionWidthStatic = collision(arrayStaticObjects, this.player1Tank,  true)
+
+        let collisionCheck = collisionWidthStatic.concat(collisionWidthDynamic)
+        controller(key, isMoving, collisionCheck, this.player1Tank)
+    }
+
+    enemyTanksController () {
+        this.enemyTanks.forEach((tank, idx) => {
+            let arrayDynamicObjects = this.enemyTanks.filter((_, index) => index !== idx).concat([this.player1Tank])
+            let arrayStaticObjects = this.bricksWalls
+
+            let collisionWidthStatic = collision(arrayStaticObjects, tank.model,  true)
+            let collisionWidthDynamic = collision(arrayDynamicObjects, tank.model, false)
+
             tank.update()
             let tankKey = tank.key
-            let collisionCheck = collision(this.bricksWalls.concat([this.player1Tank]), tank.model)
-            controller(tankKey, isMoving = true, collisionCheck, tank.model)
+
+            let collisionCheck = collisionWidthStatic.concat(collisionWidthDynamic)
+            controller(tankKey,true, collisionCheck, tank.model)
         })
     }
 
