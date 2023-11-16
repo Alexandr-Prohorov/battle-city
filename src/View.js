@@ -18,6 +18,7 @@ export default class View {
         this.renderBullet(world.player1Tank)
         this.renderPlayer1Tank(world.player1Tank)
         this.renderEnemyTanks(world.enemyTanks)
+        this.renderTrees(world.trees)
     }
 
 
@@ -40,6 +41,13 @@ export default class View {
     renderBrickWall(bricksWalls) {
         bricksWalls.map(wall => {
             wall.render(this.context, this.sprite)
+        })
+    }
+
+    renderTrees(trees) {
+        trees.map(tree => {
+            console.log(tree)
+            tree.render(this.context, this.sprite)
         })
     }
 

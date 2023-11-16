@@ -1,5 +1,4 @@
 export default function controller (key, isMoving, hasCollision, entity) {
-    // console.log('hasCollision', hasCollision.intersectionLength)
     let collision = hasCollision.filter(el => el.key === key);
     if (isMoving) {
         switch (key) {
@@ -42,7 +41,6 @@ export default function controller (key, isMoving, hasCollision, entity) {
                 break
             case 'Space':
                 console.log('space', entity)
-                entity.bullet.direction = entity.direction
                 entity.fire()
                 break
         }

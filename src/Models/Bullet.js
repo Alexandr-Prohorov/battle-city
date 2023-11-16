@@ -1,12 +1,11 @@
 export default class Bullet {
-    constructor(positionX, positionY) {
+    constructor(positionX, positionY, direction) {
         this.x = positionX
-
         this.y = positionY
+        this.direction = direction
     }
     speed = 0
-    direction = 0
-
+    active = false
     frames = [
         [646, 204, 6, 8],
         [646, 204, 6, 8],

@@ -1,5 +1,6 @@
 import Tank from './Models/Tank.js'
 import BrickWall from './Models/BrickWall.js'
+import Tree from './Models/Tree.js'
 import TankAI from './TankAI.js'
 
 import collision from './utils/collision.js'
@@ -9,6 +10,7 @@ export default class World {
     player1Tank = null
     player2Tank = null
     bricksWalls = []
+    trees = []
     enemyTanks = []
 
     async init(level) {
@@ -51,6 +53,10 @@ export default class World {
         level.map(entity => {
             entity.bricksWalls.map(elem => {
                 this.bricksWalls.push(new BrickWall(elem))
+            })
+
+            entity.trees.map(elem => {
+                this.trees.push(new Tree(elem))
             })
 
             this.player1Tank = new Tank(entity.player1Tank)
