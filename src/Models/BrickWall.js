@@ -9,12 +9,12 @@ export default class BrickWall {
         this.sw = entity.sw
         this.frame = entity.frame
     }
+    healthCounter = 2
 
     render(context, sprite) {
-        let _frame = this.frame
         context.drawImage(
             sprite.image,
-            _frame[0], _frame[1], _frame[2], _frame[3],
+            this.frame[0], this.frame[1], this.frame[2], this.frame[3],
             this.axis.x, this.axis.y, this.sw, this.sh
         )
     }

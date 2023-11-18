@@ -5,6 +5,9 @@ import TankAI from './TankAI.js'
 
 import collision from './utils/collision.js'
 import controller from './utils/controller.js'
+import bulletController from './utils/bulletController.js'
+import bulletCollision from './utils/bulletCollision.js'
+import wallDestruction from './utils/wallDestruction.js';
 
 export default class World {
     player1Tank = null
@@ -20,6 +23,7 @@ export default class World {
     update(key, isMoving) {
         this.player1TankController(key, isMoving)
         this.enemyTanksController()
+        this.bulletPlayer1TankController()
     }
 
     player1TankController (key, isMoving) {
@@ -30,6 +34,7 @@ export default class World {
         let collisionWidthStatic = collision(arrayStaticObjects, this.player1Tank,  true)
 
         let collisionCheck = collisionWidthStatic.concat(collisionWidthDynamic)
+        console.log(collisionCheck)
         controller(key, isMoving, collisionCheck, this.player1Tank)
     }
 
@@ -47,6 +52,18 @@ export default class World {
             let collisionCheck = collisionWidthStatic.concat(collisionWidthDynamic)
             controller(tankKey,true, collisionCheck, tank.model)
         })
+    }
+
+    bulletPlayer1TankController () {
+        if (this.player1Tank.isFire) {
+            let arrayStaticObjects = this.bricksWalls
+            let collisionWidthStatic = bulletCollision(arrayStaticObjects, this.player1Tank.bullet)
+
+            console.log(collisionWidthStatic)
+            bulletController(this.player1Tank.bullet.direction, collisionWidthStatic, this.player1Tank.bullet)
+
+            wallDestruction(this.bricksWalls, collisionWidthStatic, this.player1Tank)
+        }
     }
 
     generateEntities(level) {

@@ -46,7 +46,6 @@ export default class View {
 
     renderTrees(trees) {
         trees.map(tree => {
-            console.log(tree)
             tree.render(this.context, this.sprite)
         })
     }

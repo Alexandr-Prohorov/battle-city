@@ -12,7 +12,6 @@ export default class Tank {
     direction = 0
     animationFrame = 0
     isFire = false
-
     bullet = {}
 
     get frame() {
@@ -20,10 +19,10 @@ export default class Tank {
     }
 
     fire() {
-        this.bullet = new Bullet(this.axis.x, this.axis.y, this.direction)
-        this.bullet.x = this.axis.x
-        this.bullet.y = this.axis.y
-        this.isFire = true
+        if (!this.isFire) {
+            this.isFire = true
+            this.bullet = new Bullet(this.axis.x, this.axis.y, this.direction)
+        }
     }
 
     render(context, sprite) {
