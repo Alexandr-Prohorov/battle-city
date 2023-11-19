@@ -15,6 +15,7 @@ export default class View {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
         // this.drawGrid()
         this.renderBrickWall(world.bricksWalls)
+        this.renderEnemyTanksBullet(world.enemyTanks)
         this.renderBullet(world.player1Tank)
         this.renderPlayer1Tank(world.player1Tank)
         this.renderEnemyTanks(world.enemyTanks)
@@ -29,6 +30,13 @@ export default class View {
     renderEnemyTanks(enemyTanks) {
         enemyTanks.map(tank => {
             tank.model.render(this.context, this.sprite)
+        })
+    }
+    renderEnemyTanksBullet(enemyTanks) {
+        enemyTanks.forEach(tank => {
+            if (tank.model.isFire) {
+                tank.model.bullet.render(this.context, this.sprite)
+            }
         })
     }
 

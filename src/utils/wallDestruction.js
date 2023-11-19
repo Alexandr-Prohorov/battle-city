@@ -16,19 +16,19 @@ export default function wallDestruction (walls, collisionWidthStatic, tank) {
                 obj.collisionObj.frame[1] += 8
                 obj.collisionObj.healthCounter -= 1
             } else if (obj.collisionSide === 'ArrowDown') {
-                obj.collisionObj.sh -= 8;
+                obj.collisionObj.sh -= 8
                 obj.collisionObj.frame[3] -= 8
-                obj.collisionObj.healthCounter -= 1;
+                obj.collisionObj.healthCounter -= 1
             } else if (obj.collisionSide === 'ArrowLeft') {
-                obj.collisionObj.axis.x += 8;
-                obj.collisionObj.sw -= 8;
-                obj.collisionObj.frame[2] -= 8;
-                obj.collisionObj.frame[0] += 8;
-                obj.collisionObj.healthCounter -= 1;
+                obj.collisionObj.axis.x += 8
+                obj.collisionObj.sw -= 8
+                obj.collisionObj.frame[2] -= 8
+                obj.collisionObj.frame[0] += 8
+                obj.collisionObj.healthCounter -= 1
             } else if (obj.collisionSide === 'ArrowRight') {
-                obj.collisionObj.sw -= 8;
-                obj.collisionObj.frame[2] -= 8;
-                obj.collisionObj.healthCounter -= 1;
+                obj.collisionObj.sw -= 8
+                obj.collisionObj.frame[2] -= 8
+                obj.collisionObj.healthCounter -= 1
             }
         })
         tank.bullet = {}

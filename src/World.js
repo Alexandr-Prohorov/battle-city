@@ -24,6 +24,7 @@ export default class World {
         this.player1TankController(key, isMoving)
         this.enemyTanksController()
         this.bulletPlayer1TankController()
+        this.bulletEnemyTanksController()
     }
 
     player1TankController (key, isMoving) {
@@ -34,7 +35,6 @@ export default class World {
         let collisionWidthStatic = collision(arrayStaticObjects, this.player1Tank,  true)
 
         let collisionCheck = collisionWidthStatic.concat(collisionWidthDynamic)
-        console.log(collisionCheck)
         controller(key, isMoving, collisionCheck, this.player1Tank)
     }
 
@@ -51,6 +51,7 @@ export default class World {
 
             let collisionCheck = collisionWidthStatic.concat(collisionWidthDynamic)
             controller(tankKey,true, collisionCheck, tank.model)
+            // wallDestruction(this.bricksWalls, collisionWidthStatic, tank.model)
         })
     }
 
@@ -59,11 +60,21 @@ export default class World {
             let arrayStaticObjects = this.bricksWalls
             let collisionWidthStatic = bulletCollision(arrayStaticObjects, this.player1Tank.bullet)
 
-            console.log(collisionWidthStatic)
             bulletController(this.player1Tank.bullet.direction, collisionWidthStatic, this.player1Tank.bullet)
 
             wallDestruction(this.bricksWalls, collisionWidthStatic, this.player1Tank)
         }
+    }
+
+    bulletEnemyTanksController () {
+        this.enemyTanks.forEach(tank  => {
+            if (tank.model.isFire) {
+                let arrayStaticObjects = this.bricksWalls
+                let collisionWidthStatic = bulletCollision(arrayStaticObjects, tank.model.bullet)
+                bulletController(tank.model.bullet.direction, collisionWidthStatic, tank.model.bullet)
+                wallDestruction(this.bricksWalls, collisionWidthStatic, tank.model)
+            }
+        })
     }
 
     generateEntities(level) {
