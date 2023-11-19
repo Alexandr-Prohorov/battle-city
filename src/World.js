@@ -1,14 +1,19 @@
 import Tank from './Models/Tank.js'
 import BrickWall from './Models/BrickWall.js'
+import Tree from './Models/Tree.js'
 import TankAI from './TankAI.js'
 
 import collision from './utils/collision.js'
 import controller from './utils/controller.js'
+import bulletController from './utils/bulletController.js'
+import bulletCollision from './utils/bulletCollision.js'
+import wallDestruction from './utils/wallDestruction.js';
 
 export default class World {
     player1Tank = null
     player2Tank = null
     bricksWalls = []
+    trees = []
     enemyTanks = []
 
     async init(level) {
@@ -18,6 +23,8 @@ export default class World {
     update(key, isMoving) {
         this.player1TankController(key, isMoving)
         this.enemyTanksController()
+        this.bulletPlayer1TankController()
+        this.bulletEnemyTanksController()
     }
 
     player1TankController (key, isMoving) {
@@ -44,6 +51,29 @@ export default class World {
 
             let collisionCheck = collisionWidthStatic.concat(collisionWidthDynamic)
             controller(tankKey,true, collisionCheck, tank.model)
+            // wallDestruction(this.bricksWalls, collisionWidthStatic, tank.model)
+        })
+    }
+
+    bulletPlayer1TankController () {
+        if (this.player1Tank.isFire) {
+            let arrayStaticObjects = this.bricksWalls
+            let collisionWidthStatic = bulletCollision(arrayStaticObjects, this.player1Tank.bullet)
+
+            bulletController(this.player1Tank.bullet.direction, collisionWidthStatic, this.player1Tank.bullet)
+
+            wallDestruction(this.bricksWalls, collisionWidthStatic, this.player1Tank)
+        }
+    }
+
+    bulletEnemyTanksController () {
+        this.enemyTanks.forEach(tank  => {
+            if (tank.model.isFire) {
+                let arrayStaticObjects = this.bricksWalls
+                let collisionWidthStatic = bulletCollision(arrayStaticObjects, tank.model.bullet)
+                bulletController(tank.model.bullet.direction, collisionWidthStatic, tank.model.bullet)
+                wallDestruction(this.bricksWalls, collisionWidthStatic, tank.model)
+            }
         })
     }
 
@@ -51,6 +81,10 @@ export default class World {
         level.map(entity => {
             entity.bricksWalls.map(elem => {
                 this.bricksWalls.push(new BrickWall(elem))
+            })
+
+            entity.trees.map(elem => {
+                this.trees.push(new Tree(elem))
             })
 
             this.player1Tank = new Tank(entity.player1Tank)

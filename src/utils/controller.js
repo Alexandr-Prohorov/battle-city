@@ -1,12 +1,10 @@
 export default function controller (key, isMoving, hasCollision, entity) {
-    // console.log('hasCollision', hasCollision.intersectionLength)
     let collision = hasCollision.filter(el => el.key === key);
     if (isMoving) {
         switch (key) {
             case 'ArrowUp':
                 entity.direction = 0
                 entity.animationFrame ^=1
-
                 if (collision.length === 0) {
                     entity.axis.y -= 1
                 } else if (collision.length === 1 && Math.abs(collision[0].intersectionLength) <= 8) {
@@ -41,8 +39,6 @@ export default function controller (key, isMoving, hasCollision, entity) {
                 }
                 break
             case 'Space':
-                console.log('space', entity)
-                entity.bullet.direction = entity.direction
                 entity.fire()
                 break
         }

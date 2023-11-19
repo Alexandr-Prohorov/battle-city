@@ -27,7 +27,7 @@ export default class TankAI {
                 this.key = this.lastDirection;
             } else {
                 // Случайный выбор нового направления
-                const direction = Math.floor(Math.random() * 4);
+                const direction = Math.floor(Math.random() * 5);
                 switch (direction) {
                     case 0:
                         this.key = 'ArrowUp';
@@ -40,6 +40,9 @@ export default class TankAI {
                         break;
                     case 3:
                         this.key = 'ArrowRight';
+                        break;
+                    case 4:
+                        this.key = 'Space';
                         break;
                 }
                 this.lastDirection = this.key;

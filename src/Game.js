@@ -10,6 +10,7 @@ export default class Game {
     key = ''
     counter = 0
     startTime = Date.now()
+    tankMoveSound = new Audio('../sounds/battle-city-sfx-16.mp3')
 
     async init () {
         await this.view.init()
@@ -19,11 +20,13 @@ export default class Game {
             event.preventDefault()
             this.key = event.code
             this.isMoving = true
+            // this.tankMoveSound.play();
         })
 
         document.addEventListener("keyup", (event) => {
             event.preventDefault()
             this.isMoving = false
+            // this.tankMoveSound.pause();
         })
     }
 
