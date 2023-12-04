@@ -1,5 +1,5 @@
 export default function controller (key, isMoving, hasCollision, entity) {
-    let collision = hasCollision.filter(el => el.key === key);
+    let collision = hasCollision.filter(el => el.key === key)
     if (isMoving) {
         switch (key) {
             case 'ArrowUp':
@@ -8,7 +8,7 @@ export default function controller (key, isMoving, hasCollision, entity) {
                 if (collision.length === 0) {
                     entity.axis.y -= 1
                 } else if (collision.length === 1 && Math.abs(collision[0].intersectionLength) <= 8) {
-                    entity.axis.x += collision[0].intersectionLength;
+                    entity.axis.x += collision[0].intersectionLength
                 }
                 break
             case 'ArrowRight':
@@ -17,7 +17,7 @@ export default function controller (key, isMoving, hasCollision, entity) {
                 if (collision.length === 0) {
                     entity.axis.x += 1
                 } else if (collision.length === 1 && Math.abs(collision[0].intersectionLength) <= 8) {
-                    entity.axis.y += collision[0].intersectionLength;
+                    entity.axis.y += collision[0].intersectionLength
                 }
                 break
             case 'ArrowDown':
@@ -26,7 +26,7 @@ export default function controller (key, isMoving, hasCollision, entity) {
                 if (collision.length === 0) {
                     entity.axis.y += 1
                 } else if (collision.length === 1 && Math.abs(collision[0].intersectionLength) <= 8) {
-                    entity.axis.x += collision[0].intersectionLength;
+                    entity.axis.x += collision[0].intersectionLength
                 }
                 break
             case 'ArrowLeft':
@@ -35,7 +35,7 @@ export default function controller (key, isMoving, hasCollision, entity) {
                 if (collision.length === 0) {
                     entity.axis.x -= 1
                 } else if (collision.length === 1 && Math.abs(collision[0].intersectionLength) <= 8) {
-                    entity.axis.y += collision[0].intersectionLength;
+                    entity.axis.y += collision[0].intersectionLength
                 }
                 break
             case 'Space':
