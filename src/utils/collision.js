@@ -15,11 +15,11 @@ export default function collision (staticArray, dynamicObj, isStatic) { // -> [{
         const staticLeft = staticObj.axis.x
 
         if (direction === 'ArrowUp' || direction === 'ArrowDown') {
-            const horizontalIntersection = Math.min(dynamicRight, staticRight) - Math.max(dynamicLeft, staticLeft);
-            intersectionLength = (dynamicRight - staticRight >= staticLeft - dynamicLeft) ? horizontalIntersection : -horizontalIntersection;
+            const horizontalIntersection = Math.min(dynamicRight, staticRight) - Math.max(dynamicLeft, staticLeft)
+            intersectionLength = (dynamicRight - staticRight >= staticLeft - dynamicLeft) ? horizontalIntersection : -horizontalIntersection
         } else if (direction === 'ArrowLeft' || direction === 'ArrowRight') {
-            const verticalIntersection = Math.min(dynamicBottom, staticBottom) - Math.max(dynamicTop, staticTop);
-            intersectionLength = (dynamicBottom - staticBottom >= staticTop - dynamicTop) ? verticalIntersection : -verticalIntersection;
+            const verticalIntersection = Math.min(dynamicBottom, staticBottom) - Math.max(dynamicTop, staticTop)
+            intersectionLength = (dynamicBottom - staticBottom >= staticTop - dynamicTop) ? verticalIntersection : -verticalIntersection
         }
 
         return intersectionLength

@@ -1,15 +1,35 @@
+@font-face {
+    font-family: 'Pixel';
+    src: url('./fonts/font-7x7.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'M10';
+    src: url('./fonts/M10 battle cities.ttf') format('truetype');
+}
+
+body {
+    font-family: Pixel;
+    font-size: 10px;
+}
+
 canvas {
     background-color: black;
+    font-family: Pixel;
+    font-size: 12px;
 }
 
 .counter {
     position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     top: 50px;
     right: 150px;
     background-color: blue;
     color: white;
     border-radius: 10px;
-    width: 50px;
+    width: 56px;
     height: 20px;
     text-align: center;
 }
