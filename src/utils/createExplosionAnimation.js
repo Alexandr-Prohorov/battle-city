@@ -1,4 +1,4 @@
-import ExplosionAnimation from '../Models/ExplosionAnimation.js'
+import ExplosionAnimation from '../Animations/ExplosionAnimation.js'
 // import TankExplosionAnimation from '../Models/TankExplosionAnimation.js'
 
 export default function createExplosionAnimation (array) {

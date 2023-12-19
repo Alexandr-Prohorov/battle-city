@@ -1,4 +1,5 @@
 import Bullet from './Bullet.js'
+// import CreateTankAnimation from '../Animations/CreateTankAnimation.js'
 export default class Tank {
     constructor(entity) {
         this.axis = {
@@ -13,6 +14,7 @@ export default class Tank {
     animationFrame = 0
     isFire = false
     bullet = {}
+    animationCreateTank = {}
 
     get frame() {
         return this.frames[this.direction + this.animationFrame]

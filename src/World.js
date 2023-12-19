@@ -2,6 +2,7 @@ import Tank from './Models/Tank.js'
 import BrickWall from './Models/BrickWall.js'
 import Tree from './Models/Tree.js'
 import TankAI from './TankAI.js'
+import TankShield from './Animations/TankShield.js'
 
 import collision from './utils/collision.js'
 import controller from './utils/controller.js'
@@ -10,6 +11,8 @@ import bulletCollision from './utils/bulletCollision.js'
 import wallDestruction from './utils/wallDestruction.js'
 import tanksDestruction from './utils/tanksDestruction.js'
 import createExplosionAnimation from './utils/createExplosionAnimation.js'
+import createTankExplosionAnimation from './utils/createTankExplosionAnimation.js'
+import CreateTankAnimation from './Animations/CreateTankAnimation.js'
 
 export default class World {
     player1Tank = null
@@ -18,16 +21,18 @@ export default class World {
     trees = []
     enemyTanks = []
     explosions = []
-    dynamicExplosions = []
+    tankAbilities = []
     gameData = {}
 
     async init(level) {
         this.generateEntities(level) // Переделать если уровней много
+        this.tankAbilities.push(new TankShield(this.player1Tank.axis, 200))
     }
 
     update(key, isMoving, gameData) {
         this.gameData = gameData
         this.player1TankController(key, isMoving)
+        this.tankAbilitiesController()
         this.enemyTanksController()
         this.bulletPlayer1TankController(gameData)
         this.bulletEnemyTanksController()
@@ -42,6 +47,14 @@ export default class World {
 
         let collisionCheck = collisionWidthStatic.concat(collisionWidthDynamic)
         controller(key, isMoving, collisionCheck, this.player1Tank)
+    }
+
+    tankAbilitiesController() {
+        if (this.tankAbilities.length) {
+            this.tankAbilities.forEach(ability => {
+                ability.axis = this.player1Tank.axis
+            })
+        }
     }
 
     enemyTanksController () {
@@ -69,6 +82,7 @@ export default class World {
             let collisionWidthDynamic = bulletCollision(arrayDynamicObjects, this.player1Tank.bullet)
 
             let collisions = collisionWidthStatic.concat(collisionWidthDynamic)
+
             bulletController(this.player1Tank.bullet.direction, collisions, this.player1Tank.bullet)
             // tanksDestruction можно переделать, чтобы он возвращал индекс объекта который через splice можно удалить
             tanksDestruction(this.enemyTanks, collisionWidthDynamic, this.player1Tank, gameData)
@@ -77,6 +91,10 @@ export default class World {
             const set = new Set()
 
             createExplosionAnimation(collisions).forEach(explosion => {
+                set.add(explosion)
+            })
+
+            createTankExplosionAnimation(collisionWidthDynamic).forEach(explosion => {
                 set.add(explosion)
             })
 
@@ -124,6 +142,7 @@ export default class World {
             })
 
             this.player1Tank = new Tank(entity.player1Tank)
+            this.player1Tank.animationCreateTank = new CreateTankAnimation(this.player1Tank.axis)
 
             entity.enemyTanks.map(elem => {
                 this.enemyTanks.push(new TankAI(new Tank(elem)))

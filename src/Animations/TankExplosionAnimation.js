@@ -1,7 +1,7 @@
 export default class TankExplosionAnimation {
     constructor({x, y}) {
-        this.x = x
-        this.y = y
+        this.x = x - 30
+        this.y = y - 30
     }
 
     animationFrame = 0

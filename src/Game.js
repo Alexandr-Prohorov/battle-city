@@ -1,7 +1,8 @@
 export default class Game {
-    constructor({ menu, menuView, world, view, menuData, levels }) {
+    constructor({ menu, menuView, stageStart, world, view, menuData, levels }) {
         this.menu = menu
         this.menuView = menuView
+        this.stageStart = stageStart
         this.world = world
         this.view = view
         this.menuData = menuData
@@ -20,6 +21,7 @@ export default class Game {
         level: 0,
         player: 'Player1'
     }
+    timeoutId = null
 
     async init () {
         await this.menu.init(this.menuData)
@@ -40,6 +42,9 @@ export default class Game {
             case 'menu':
                 this.updateMenuMode()
                 break
+            case 'stageStart':
+                this.updateStageStartMode()
+                break
             case 'play':
                 this.updatePlayMode()
                 break
@@ -54,11 +59,20 @@ export default class Game {
         this.key = ''
     }
 
+    updateStageStartMode() {
+        this.stageStart.update('STAGE 1')
+    }
+
     updatePlayMode() {
         this.world.update(this.key, this.isMoving, this.gameData)
         this.view.update(this.world)
-        if (this.key === 'Space') this.key = ''
-        this.saveScore()
+        if (this.key === 'Space') this.key = '' // чтобы стрельба прерывалась (надо изменить)
+        if (!this.world.enemyTanks.length && !this.timeoutId) {
+            this.saveScore()
+            this.timeoutId = setTimeout(() => {
+                this.gameState = 'menu'
+            }, 3000)
+        }
     }
 
     setDataSession() {
@@ -71,8 +85,8 @@ export default class Game {
             this.key = event.code
             this.isMoving = true
             // this.tankMoveSound.play()
-            if (event.code === 'Enter') {
-                this.gameState = 'play'
+            if (event.code === 'Enter' && !this.menuView.startAnimationY) {
+                this.gameState === 'menu' ? this.gameState = 'stageStart' : this.gameState = 'play'
             }
             if (event.code === 'Escape') {
                 this.gameState = 'menu'
@@ -87,12 +101,9 @@ export default class Game {
     }
 
     saveScore() {
-        // изменить условие (game не должен знать про танки)
-        if (!this.world.enemyTanks.length) {
-            let serializedData = JSON.stringify(this.gameData)
-            sessionStorage.setItem('myGame', serializedData)
-            this.gameState = 'menu'
-        }
+        // изменить (game не должен знать про танки)
+        let serializedData = JSON.stringify(this.gameData)
+        sessionStorage.setItem('myGame', serializedData)
     }
 
     updateCounter() {

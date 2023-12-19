@@ -1,3 +1,4 @@
+import CreateTankAnimation from '../Animations/CreateTankAnimation.js'
 export default class View {
 
     constructor(canvas, ctx, sprite) {
@@ -17,15 +18,52 @@ export default class View {
         this.renderBrickWall(world.bricksWalls)
         this.renderEnemyTanksBullet(world.enemyTanks)
         this.renderBullet(world.player1Tank)
-        this.renderPlayer1Tank(world.player1Tank)
+        this.renderPlayer1Tank(world.player1Tank, world.tankAbilities)
+        // this.renderPlayer1TankAbilities(world.tankAbilities)
         this.renderEnemyTanks(world.enemyTanks)
         this.renderTrees(world.trees)
         this.renderExplosionAnimation(world.explosions)
     }
 
+    renderPlayer1Tank(player1Tank, tankAbilities) {
+        const animation = player1Tank.animationCreateTank
+        if (animation.animationFrame <= 2) {
+            if (animation.delay < 20) animation.delay++
+            else {
+                if (animation.animationFrame < 3) {
+                    animation.animationFrame += 1
+                }
+                animation.delay = 0
+                animation.count++
+                if (animation.count === 3) {
+                    animation.animationFrame = 0
+                }
+            }
+            // animation.delay++
+            animation.render(this.context, this.sprite)
+        } else {
+            player1Tank.render(this.context, this.sprite)
+            this.renderPlayer1TankAbilities(tankAbilities)
+        }
+    }
 
-    renderPlayer1Tank(player1Tank) {
-        player1Tank.render(this.context, this.sprite)
+    renderPlayer1TankAbilities(tankAbilities) {
+    // Анимации танка
+        const animation = (ability, idx) => {
+            if (ability.countDelay % 5 === 0) {
+                ability.animationFrame ^= 1
+            }
+            else if (ability.countDelay > ability.delay) tankAbilities.splice(idx, 1)
+            ability.render(this.context, this.sprite)
+            ability.countDelay++
+        }
+        if (tankAbilities.length) {
+            let index = 0
+            for (let ability of tankAbilities) {
+                animation(ability, index)
+                index++
+            }
+        }
     }
 
     renderEnemyTanks(enemyTanks) {
